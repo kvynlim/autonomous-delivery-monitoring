@@ -4,14 +4,28 @@ from fastapi.responses import JSONResponse
 from http import HTTPStatus
 from infrastructure.utility.logger import Logger
 
+
 class FleetController:
     def __init__(self):
         self.__router = APIRouter(tags=[self.__class__.__name__])
-        self.__router.add_api_route(path="/api/robots", endpoint=self.__query_robots, methods=["GET"], 
-                                    responses={ HTTPStatus.OK.value: {"description": f"{HTTPStatus.OK._name_}"}, 
-                                                HTTPStatus.BAD_REQUEST.value: {"description": f"{HTTPStatus.BAD_REQUEST._name_}"}})
-        self.__router.add_api_route(path="/api/robots/{robot_id}", endpoint=self.__query_robot, methods=["GET"], responses={ HTTPStatus.OK.value: {"description": f"{HTTPStatus.OK._name_}"}, 
-                                                HTTPStatus.BAD_REQUEST.value: {"description": f"{HTTPStatus.BAD_REQUEST._name_}"}})
+        self.__router.add_api_route(
+            path="/api/robots",
+            endpoint=self.__query_robots,
+            methods=["GET"],
+            responses={
+                HTTPStatus.OK.value: {"description": f"{HTTPStatus.OK._name_}"},
+                HTTPStatus.BAD_REQUEST.value: {"description": f"{HTTPStatus.BAD_REQUEST._name_}"},
+            },
+        )
+        self.__router.add_api_route(
+            path="/api/robots/{robot_id}",
+            endpoint=self.__query_robot,
+            methods=["GET"],
+            responses={
+                HTTPStatus.OK.value: {"description": f"{HTTPStatus.OK._name_}"},
+                HTTPStatus.BAD_REQUEST.value: {"description": f"{HTTPStatus.BAD_REQUEST._name_}"},
+            },
+        )
         self.__fleet_manager = FleetManager()
 
     def get_router(self):
