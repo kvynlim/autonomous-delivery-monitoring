@@ -3,7 +3,6 @@ from fastapi import APIRouter, Request, status
 from fastapi.responses import JSONResponse
 from http import HTTPStatus
 from infrastructure.utility.logger import Logger
-from typing import Union
 
 class FleetController:
     def __init__(self):
@@ -31,7 +30,7 @@ class FleetController:
         else:
             return JSONResponse(content=None, status_code=status.HTTP_400_BAD_REQUEST)
 
-    async def __query_robot(self, robot_id: Union[int, str], request: Request):
+    async def __query_robot(self, robot_id: str, request: Request):
         """
         **Query robot status by robot id**
 
