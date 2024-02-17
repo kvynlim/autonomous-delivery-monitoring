@@ -17,6 +17,8 @@ pip3 install -r requirements.txt
 
 # Steps to run project
 
+> Ensure to source devel/setup.bash
+
 1. Execute the following command to launch gazebo simulation
 ```
 roslaunch turtlebot3_gazebo multi_turtlebot3.launch
