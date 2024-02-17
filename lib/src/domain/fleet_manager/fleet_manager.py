@@ -1,12 +1,11 @@
 from http import HTTPStatus
 from infrastructure.utility.logger import Logger
+from re import search
 from rospy import wait_for_message, init_node
-from rospy.core import is_initialized
 from rospy.exceptions import ROSException
 from robot_status_msgs.msg import RobotStatus
+from subprocess import check_output, STDOUT
 from typing import Dict, List, Optional
-
-
 
 class FleetManager:
     def __init__(self):
@@ -14,7 +13,7 @@ class FleetManager:
 
     async def get_robot_status(self, robot_id: Optional[str] = None):
         try:
-            if is_initialized():
+            if search(r'/rosout', check_output(['rostopic', 'list'], stderr=STDOUT, text=True)):
                 init_node("get_robot_status")
             else:
                 Logger().error("FleetManager -- Get robot -- ROS Master is not running")
