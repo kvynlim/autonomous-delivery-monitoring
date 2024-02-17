@@ -17,13 +17,15 @@ pip3 install -r requirements.txt
 
 # Steps to run project
 
-> Ensure to source devel/setup.bash
+1. Build the ros packages by running catkin_make in ros_ws directory
 
-1. Execute the following command to launch gazebo simulation
+> Ensure to source devel/setup.bash before proceeding
+
+2. Execute the following command to launch gazebo simulation
 ```
 roslaunch turtlebot3_gazebo multi_turtlebot3.launch
 ```
-2. Execute main.py using python3 in api-server directory to start the API server
+3. Execute main.py using python3 in api-server directory to start the API server
 * Visit http://0.0.0.0:5000/docs to test out the API
 
-3. Execute test.py using python3 in api-server/test directory to run the test script
+4. Execute test.py using python3 in api-server/test directory to run the test script
