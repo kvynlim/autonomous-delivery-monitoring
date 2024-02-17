@@ -20,8 +20,7 @@ void RobotStatusPublisher::odomCallback(const nav_msgs::Odometry::ConstPtr &msg)
 void RobotStatusPublisher::update()
 {
     robot_status_msgs::RobotStatus robotStatus;
-    robotStatus.stamp = ros::Time::now()
-                            robotStatus.battery_level = std::rand() % 101;
+    robotStatus.battery_level = std::rand() % 101;
     robotStatus.pose.position = m_odomData.pose.pose.position;
     robotStatus.pose.orientation = m_odomData.pose.pose.orientation;
 
