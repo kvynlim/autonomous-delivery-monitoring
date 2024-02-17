@@ -1,0 +1,3 @@
+time stamp
+uint8 battery_level
+geometry_msgs/Pose pose
