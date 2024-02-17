@@ -1,7 +1,10 @@
+from http import HTTPStatus
 from infrastructure.utility.logger import Logger
 from rospy import wait_for_message, init_node
+from rospy.exceptions import ROSException
 from robot_status_msgs.msg import RobotStatus
 from typing import Dict, List, Optional
+
 
 
 class FleetManager:
@@ -21,7 +24,7 @@ class FleetManager:
                     robots_id.append(robot_id)
                 else:
                     Logger().error(f"FleetManager -- Invalid robot id {robot_id}")
-                    return None
+                    return HTTPStatus.NOT_FOUND
 
             for robot_id in robots_id:
                 data = wait_for_message(topic=f"/{robot_id}/robot_status", topic_type=RobotStatus, timeout=5)
@@ -34,6 +37,9 @@ class FleetManager:
                     "battery_level": data.battery_level,
                 }
             return robot_id_robot_status
+        except ROSException as error:
+            Logger().error(f"FleetManager -- Get robot -- {type(error).__name__} {error}")
+            return HTTPStatus.REQUEST_TIMEOUT
         except Exception as error:
             Logger().error(f"FleetManager -- Get robot -- {type(error).__name__} {error}")
             return None

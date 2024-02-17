@@ -41,8 +41,13 @@ class FleetController:
         result = await self.__fleet_manager.get_robot_status()
         if isinstance(result, dict):
             return JSONResponse(content=result, status_code=status.HTTP_200_OK)
+        elif isinstance(result, HTTPStatus):
+            if result == HTTPStatus.REQUEST_TIMEOUT:
+                return JSONResponse(content="Request timed out", status_code=status.HTTP_408_REQUEST_TIMEOUT)
+            else:
+                return JSONResponse(content=None, status_code=status.HTTP_500_INTERNAL_SERVER_ERROR)
         else:
-            return JSONResponse(content=None, status_code=status.HTTP_400_BAD_REQUEST)
+            return JSONResponse(content=None, status_code=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     async def __query_robot(self, robot_id: str, request: Request):
         """
@@ -54,5 +59,12 @@ class FleetController:
         result = await self.__fleet_manager.get_robot_status(robot_id)
         if isinstance(result, dict):
             return JSONResponse(content=result, status_code=status.HTTP_200_OK)
+        elif isinstance(result, HTTPStatus):
+            if result == HTTPStatus.NOT_FOUND:
+                return JSONResponse(content="Robot id not found", status_code=status.HTTP_404_NOT_FOUND)
+            elif result == HTTPStatus.REQUEST_TIMEOUT:
+                return JSONResponse(content="Request timed out", status_code=status.HTTP_408_REQUEST_TIMEOUT)
+            else:
+                return JSONResponse(content=None, status_code=status.HTTP_500_INTERNAL_SERVER_ERROR)
         else:
-            return JSONResponse(content=None, status_code=status.HTTP_400_BAD_REQUEST)
+            return JSONResponse(content=None, status_code=status.HTTP_500_INTERNAL_SERVER_ERROR)
