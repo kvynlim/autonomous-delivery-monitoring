@@ -12,8 +12,10 @@ from src.fleet_controller import FleetController
 app = FastAPI()
 app.include_router(FleetController().get_router())
 
+
 def main():
     run("main:app", host="0.0.0.0", port=5000, log_level="info")
+
 
 if __name__ == "__main__":
     main()
